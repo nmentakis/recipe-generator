@@ -23,6 +23,7 @@ app.use(bodyParser.json())
 
 app.get('/api/recipes', (req,res) => {
   knex('recipes').then(recipes => {
+    console.log('inside the get request', recipes)
     res.json(recipes)
   })
 })
