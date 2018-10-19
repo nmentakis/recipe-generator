@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Recipe from './Components/Recipe.js'
 import axios from 'axios'
@@ -14,23 +14,25 @@ class App extends React.Component {
         sourceUrl: 'http://www.closetcooking.com/2012/11/bacon-wrapped-jalapeno-popper-stuffed.html'
       }]
     }
+    this.that = this
   }
   componentDidMount() {
     axios.get('/api/recipes')
-     .catch((error) => {
-       console.log(error);
-    }).then(response => this.setState(state =>
-      {this.state.recipes = response}
-      ))
+     .then(response => {
+      this.that.setState({recipes: response.data})
+    })
   }
 
   render()  {
     return (
     <div>
-      <h1>I am an App!</h1>
-      <div>
-      <Recipe srcUrl={this.state.recipes[0].sourceUrl} imgUrl={this.state.recipes[0].imgUrl} title={this.state.recipes[0].title}/>
-      </div>
+      <ul>
+      {
+        this.state.recipes.map((recipe,index) => (
+          <Recipe key={index} srcUrl={recipe.sourceUrl} imgUrl={recipe.imgUrl} title={recipe.title}/>
+        ))
+      }
+      </ul>
     </div>
     );
   }

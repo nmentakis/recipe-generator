@@ -1,10 +1,10 @@
-import React from 'React';
-function Recipe(props) {
+import React from 'react';
+const Recipe = (props) => {
   return (
-    <div>
+    <li>
       <img src={props.imgUrl}></img>
       <div>{props.title}</div>
-    </div>
+    </li>
   );
 }
 export default Recipe;
