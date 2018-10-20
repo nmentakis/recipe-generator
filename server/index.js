@@ -53,7 +53,7 @@ app.post('/api/delete', (req,res) => {
 
 app.get('/api/recipes', (req,res) => {
   //SELECT myid FROM mytable ORDER BY RANDOM() LIMIT 1;
-  knex.raw('SELECT * FROM recipes ORDER BY RANDOM() Limit 5').then(recipes => {
+  knex.raw('SELECT * FROM recipes ORDER BY RANDOM() Limit 30').then(recipes => {
     res.json(recipes.rows)
   })
 })

@@ -52,6 +52,7 @@ class App extends React.Component {
   render()  {
     return (
     <div>
+      <h1 class='header'>Recipe Generator</h1>
       <button class="randomizer" onClick={() => (this.that.random())}>RANDOMIZE</button>
       <Search onSearch={this.handleSearch}/>
       <ul id='parent'>
