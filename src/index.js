@@ -26,7 +26,7 @@ class App extends React.Component {
   render()  {
     return (
     <div>
-      <ul>
+      <ul id='parent'>
       {
         this.state.recipes.map((recipe,index) => (
           <Recipe key={index} srcUrl={recipe.sourceUrl} imgUrl={recipe.imgUrl} title={recipe.title}/>

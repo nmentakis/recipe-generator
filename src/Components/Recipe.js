@@ -1,9 +1,9 @@
 import React from 'react';
 const Recipe = (props) => {
   return (
-    <li>
-      <img src={props.imgUrl}></img>
-      <div>{props.title}</div>
+    <li class='container'>
+      <h2 class='item-a'>{props.title}</h2>
+      <a href={props.srcUrl}><img class='item-b'src={props.imgUrl}></img></a>
     </li>
   );
 }
