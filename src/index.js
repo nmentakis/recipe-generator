@@ -51,7 +51,7 @@ class App extends React.Component {
   }
 
   handleLove(title, image_url, source_url) {
-    axios.post('/api/love', {title, image_url, source_url}).then(result => console.log(result))
+    axios.post('/api/love', {title, image_url, source_url})
   }
   getRandom() {
     axios.get('/api/recipes')
