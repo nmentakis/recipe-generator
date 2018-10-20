@@ -21,6 +21,9 @@ app.use(bodyParser.json())
 // app.get('/', (req, res) => {
 //   res.send('WORK')
 // })
+app.post('/api/search', (req, res) => {
+  console.log(req.body)
+})
 
 app.get('/api/recipes', (req,res) => {
   //SELECT myid FROM mytable ORDER BY RANDOM() LIMIT 1;

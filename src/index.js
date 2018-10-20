@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Recipe from './Components/Recipe.js'
 import axios from 'axios'
+import Search from './Components/Search.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
         sourceUrl: 'http://www.closetcooking.com/2012/11/bacon-wrapped-jalapeno-popper-stuffed.html'
       }]
     }
+    this.handleSearch = this.handleSearch.bind(this)
     this.that = this
   }
   componentDidMount() {
@@ -23,9 +25,23 @@ class App extends React.Component {
     })
   }
 
+  handleSearch(value) {
+    axios.post('api/search', {
+      value
+    })
+  }
+
+  random() {
+    axios.get('/api/recipes')
+     .then(response => {
+      this.setState({recipes: response.data})
+    })
+  }
   render()  {
     return (
     <div>
+      <button class="randomizer" onClick={() => (this.that.random())}>RANDOMIZE</button>
+      <Search onSearch={this.handleSearch}/>
       <ul id='parent'>
       {
         this.state.recipes.map((recipe,index) => (
