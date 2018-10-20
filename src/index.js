@@ -15,8 +15,9 @@ class App extends React.Component {
         source_url: 'http://www.closetcooking.com/2012/11/bacon-wrapped-jalapeno-popper-stuffed.html'
       }]
     }
-    this.handleSearch = this.handleSearch.bind(this)
-    this.that = this
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.that = this;
   }
   componentDidMount() {
     axios.get('/api/recipes')
@@ -24,7 +25,15 @@ class App extends React.Component {
       this.that.setState({recipes: response.data})
     })
   }
-
+  handleDelete(title) {
+    axios.post('/api/delete', {title})
+    .then(this.that.setState({recipes: this.state.recipes.filter(recipe => recipe.title !== title)}))
+  }
+  removeTodo(name){
+    this.setState({
+        todo: this.state.todo.filter(el => el !== name)
+    })
+}
   handleSearch(value) {
     axios.post('api/search', {
       value
@@ -43,12 +52,12 @@ class App extends React.Component {
   render()  {
     return (
     <div>
-      <button class="randomizer" onClick={() => (this.that.random())}></button>
+      <button class="randomizer" onClick={() => (this.that.random())}>RANDOMIZE</button>
       <Search onSearch={this.handleSearch}/>
       <ul id='parent'>
       {
         this.state.recipes.map((recipe,index) => (
-          <Recipe key={index} srcUrl={recipe.source_url} imgUrl={recipe.image_url} title={recipe.title}/>
+          <Recipe key={index} srcUrl={recipe.source_url} imgUrl={recipe.image_url} title={recipe.title} handleDelete={this.handleDelete}/>
         ))
       }
       </ul>

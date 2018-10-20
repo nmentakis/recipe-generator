@@ -44,6 +44,13 @@ app.post('/api/search', (req, res) => {
 
 })
 
+app.post('/api/delete', (req,res) => {
+  console.log(req.body)
+  knex('recipes').where('title', req.body.title).del().then(result => {
+    res.send('All Gone')
+  })
+})
+
 app.get('/api/recipes', (req,res) => {
   //SELECT myid FROM mytable ORDER BY RANDOM() LIMIT 1;
   knex.raw('SELECT * FROM recipes ORDER BY RANDOM() Limit 5').then(recipes => {
