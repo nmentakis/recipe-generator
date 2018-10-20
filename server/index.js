@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('../database/db.js')
+const db = require('../database/db.js');
+const axios = require('axios');
+const config = require('../config.js')
 
 const app = express();
 const port = process.env.port || 3000;
@@ -21,8 +23,25 @@ app.use(bodyParser.json())
 // app.get('/', (req, res) => {
 //   res.send('WORK')
 // })
+//send a request to the api to search for ingredients
 app.post('/api/search', (req, res) => {
-  console.log(req.body)
+  console.log('this value: ', req.body.value)
+  axios.get('https://www.food2fork.com/api/search', {
+    params: {
+      key: config.TOKEN,
+      sort: 'r',
+      q: req.body.value
+    }
+  }).then(result => {
+    res.json(result.data);
+    result.data.recipes.forEach(function(recipe) {
+      db.save(recipe, (err, recipe) => {
+        if(err) {console.log(err)}
+        else {console.log('complete')}
+      })
+    });
+  })
+
 })
 
 app.get('/api/recipes', (req,res) => {

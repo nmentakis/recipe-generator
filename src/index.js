@@ -11,8 +11,8 @@ class App extends React.Component {
       recipes: [{
         id: 14,
         title: 'Bacon Wrapped Jalapeno Popper Stuffed Chicken',
-        imgUrl: 'http://static.food2fork.com/Bacon2BWrapped2BJalapeno2BPopper2BStuffed2BChicken2B5002B5909939b0e65.jpg',
-        sourceUrl: 'http://www.closetcooking.com/2012/11/bacon-wrapped-jalapeno-popper-stuffed.html'
+        image_url: 'http://static.food2fork.com/Bacon2BWrapped2BJalapeno2BPopper2BStuffed2BChicken2B5002B5909939b0e65.jpg',
+        source_url: 'http://www.closetcooking.com/2012/11/bacon-wrapped-jalapeno-popper-stuffed.html'
       }]
     }
     this.handleSearch = this.handleSearch.bind(this)
@@ -28,7 +28,10 @@ class App extends React.Component {
   handleSearch(value) {
     axios.post('api/search', {
       value
-    })
+    }).then(response => {
+      this.that.setState({recipes: response.data.recipes})
+    }
+    )
   }
 
   random() {
@@ -40,12 +43,12 @@ class App extends React.Component {
   render()  {
     return (
     <div>
-      <button class="randomizer" onClick={() => (this.that.random())}>RANDOMIZE</button>
+      <button class="randomizer" onClick={() => (this.that.random())}></button>
       <Search onSearch={this.handleSearch}/>
       <ul id='parent'>
       {
         this.state.recipes.map((recipe,index) => (
-          <Recipe key={index} srcUrl={recipe.sourceUrl} imgUrl={recipe.imgUrl} title={recipe.title}/>
+          <Recipe key={index} srcUrl={recipe.source_url} imgUrl={recipe.image_url} title={recipe.title}/>
         ))
       }
       </ul>

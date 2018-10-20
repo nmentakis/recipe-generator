@@ -13,9 +13,9 @@ let save = (recipe, callback) => {
   knex('recipes')
   .insert(
     { title: recipe.title,
-      imgUrl: recipe.image_url,
-      sourceUrl: recipe.source_url
-    }).then(result => console.log(result))
+      image_url: recipe.image_url,
+      source_url: recipe.source_url
+    }).then(result => callback(result))
 };
 
 module.exports.save = save;

@@ -27,8 +27,8 @@ class Search extends React.Component {
   render () {
     return (
       <form>
-        <input class="searchbar" placeholder="Choose your Ingredient" ref={input => this.search = input} onChange={this.handleChange} value={this.state.query}/>
-        <button class="searchbar" type="submit" onClick={this.onClick}>Submit</button>
+        <input class="searchbar" placeholder="Choose your Ingredient..." ref={input => this.search = input} onChange={this.handleChange} value={this.state.query}/>
+        <button class="searchbutton" type="submit" onClick={this.onClick}>Submit</button>
       </form>
     )
   }
