@@ -17,6 +17,7 @@ class App extends React.Component {
     }
     this.handleSearch = this.handleSearch.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleLove = this.handleLove.bind(this)
     this.that = this;
   }
   componentDidMount() {
@@ -43,7 +44,16 @@ class App extends React.Component {
     )
   }
 
-  random() {
+  getFavorites() {
+    axios.get('/api/love').then(response => {
+      this.setState({recipes: response.data})
+    })
+  }
+
+  handleLove(title, image_url, source_url) {
+    axios.post('/api/love', {title, image_url, source_url}).then(result => console.log(result))
+  }
+  getRandom() {
     axios.get('/api/recipes')
      .then(response => {
       this.setState({recipes: response.data})
@@ -53,12 +63,13 @@ class App extends React.Component {
     return (
     <div>
       <h1 class='header'>Recipe Generator</h1>
-      <button class="randomizer" onClick={() => (this.that.random())}>RANDOMIZE</button>
+      <button class="randomizer" onClick={() => (this.that.getRandom())}>RANDOMIZE</button>
+      <button class='favoritebutton' onClick={() => this.that.getFavorites()}>Favorites</button>
       <Search onSearch={this.handleSearch}/>
       <ul id='parent'>
       {
         this.state.recipes.map((recipe,index) => (
-          <Recipe key={index} srcUrl={recipe.source_url} imgUrl={recipe.image_url} title={recipe.title} handleDelete={this.handleDelete}/>
+          <Recipe key={index} srcUrl={recipe.source_url} imgUrl={recipe.image_url} title={recipe.title} handleDelete={this.handleDelete} handleLove={this.handleLove}/>
         ))
       }
       </ul>

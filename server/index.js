@@ -20,10 +20,24 @@ app.use(bodyParser.urlencoded({ extended: false }))
  
 app.use(bodyParser.json())
 
-// app.get('/', (req, res) => {
-//   res.send('WORK')
-// })
-//send a request to the api to search for ingredients
+app.post('/api/love', (req, res) => {
+  console.log(req.body)
+  knex('favorites')
+  .insert(
+    { title: req.body.title,
+      image_url: req.body.image_url,
+      source_url: req.body.source_url
+    }).then(result => res.send('complete'))
+})
+
+app.get('/api/love', (req, res) => {
+  knex.raw('SELECT * FROM favorites ORDER BY RANDOM() Limit 30').then(recipes => {
+    res.json(recipes.rows)
+})
+})
+
+
+
 app.post('/api/search', (req, res) => {
   console.log('this value: ', req.body.value)
   axios.get('https://www.food2fork.com/api/search', {
