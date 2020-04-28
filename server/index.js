@@ -39,7 +39,7 @@ app.get("/api/love", (req, res) => {
 });
 
 app.get("/things", (req, res) => {
-  res.send("things");
+  res.send("all the things");
 });
 
 app.post("/api/search", (req, res) => {
